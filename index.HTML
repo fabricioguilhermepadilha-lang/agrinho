@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site em Arquivo Único</title>
+    
+    <!-- ESTILOS CSS -->
+    <style>
+        /* Configurações Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Variáveis para Tema Claro (Padrão) */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --header-bg: #1e293b;
+            --header-text: #ffffff;
+        }
+
+        /* Variáveis para Tema Escuro */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --primary-color: #3700b3;
+            --primary-hover: #bb86fc;
+            --header-bg: #000000;
+            --header-text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Botões */
+        button {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #toggle-theme {
+            background-color: transparent;
+            border: 2px solid var(--header-text);
+            color: var(--header-text);
+        }
+
+        #toggle-theme:hover {
+            background-color: var(--header-text);
+            color: var(--header-bg);
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        [data-theme="dark"] .card p {
+            color: #aaa;
+        }
+
+        /* Seção do Contador */
+        .counter-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #counter-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: inline-block;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ESTRUTURA HTML -->
+    <header>
+        <h1>Meu Website</h1>
+        <button id="toggle-theme">Alternar Modo Escuro</button>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Interatividade Total</h2>
+            <p>Clique no botão abaixo para ver o contador funcionar em tempo real.</p>
+            
+            <div class="counter-container">
+                <span id="counter-value">0</span>
+                <button id="btn-count">Clique Aqui!</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Criado em arquivo único.</p>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // Seleção dos elementos do DOM
+        const btnCount = document.getElementById('btn-count');
+        const counterValue = document.getElementById('counter-value');
+        const btnTheme = document.getElementById('toggle-theme');
+
+        // Variável para armazenar a contagem
+        let count = 0;
+
+        // Função do Contador de Cliques
+        btnCount.addEventListener('click', () => {
+            count++;
+            counterValue.textContent = count;
+            
+            // Pequena animação de escala ao clicar
+            counterValue.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counterValue.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        // Adiciona transição de CSS ao elemento do contador via JS
+        counterValue.style.transition = 'transform 0.1s ease';
+
+        // Função para Alternar o Modo Escuro
+        btnTheme.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                btnTheme.textContent = 'Alternar Modo Escuro';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = 'Alternar Modo Claro';
+            }
+        });
+    </script>
+</body>
+</html>
